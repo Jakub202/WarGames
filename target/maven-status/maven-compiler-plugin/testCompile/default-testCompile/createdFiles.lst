@@ -1,0 +1,6 @@
+Battle\ArmyTest.class
+units\CavalryUnitTest.class
+units\CommanderUnitTest.class
+units\InfantryUnitTest.class
+units\RangedUnitTest.class
+units\UnitTest.class
