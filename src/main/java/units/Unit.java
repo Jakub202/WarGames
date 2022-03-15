@@ -36,6 +36,8 @@ public abstract class Unit {
 
     private int nrOfAttacksTaken = 0;
 
+    private boolean recruited = false;
+
 
     /**
      * constructor for Unit class

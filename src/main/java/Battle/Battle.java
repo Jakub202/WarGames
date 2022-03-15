@@ -13,7 +13,7 @@ public class Battle {
 
     private Army army2;
 
-    private Random random = new Random();
+    private static Random random = new Random();
 
     public Battle(Army army1, Army army2) {
         this.army1 = army1;
@@ -22,78 +22,43 @@ public class Battle {
 
 
     public Army simulate(){
-        boolean army1Starts = this.getArmy1Starts();
+        boolean army1Starts = army1Starts();
         boolean unit1HasWon = false;
         boolean unit2HasWon = false;
         var unit1 = army1.getRandom();
         var unit2 = army2.getRandom();
-        System.out.println(army1Starts);
         while(army1.hasUnits() && army2.hasUnits()){
-            System.out.println(army1.getSizeOfArmy() + " " + army2.getSizeOfArmy());
             if(!unit1HasWon){
                 unit1 = army1.getRandom();
-                System.out.println("army1 uses a new unit");
             }
             if(!unit2HasWon){
                 unit2 = army2.getRandom();
-                System.out.println("army 2 uses a new unit");
             }
 
-            if(army1Starts) {
-                System.out.println(unit1.getName()+ " vs " + unit2.getName());
-                while (unit1.getHealth() > 0 && unit2.getHealth() > 0) {
-                    unit1.attack(unit2);
-                    if(unit2.getHealth() < 1){
-                        break;
-                    }
-                    unit2.attack(unit1);
-                }if(getWinnerUnit(unit1,unit2).equals(unit1)){
-                    unit1HasWon = true;
-                    unit2HasWon = false;
-                    army1Starts = false;
-                    army2.remove(unit2);
-                    System.out.println("unit1 has won");
-                }else{
-                    unit1HasWon = false;
-                    unit2HasWon = true;
-                    army1Starts = true;
-                    army1.remove(unit1);
-                    System.out.println("unit2 has won");
-                }
-            }else {
-                System.out.println(unit1.getName()+ " vs " + unit2.getName());
-                while (unit1.getHealth() > 0 && unit2.getHealth() > 0) {
-                    unit2.attack(unit1);
-                    if(unit1.getHealth() < 1){
-                        break;
-                    }
-                    unit1.attack(unit2);
-                }if(getWinnerUnit(unit1,unit2).equals(unit1)){
-                    unit1HasWon = true;
-                    unit2HasWon = false;
-                    army1Starts = false;
-                    army2.remove(unit2);
-                    System.out.println("unit1 has won");
-                }else{
-                    unit1HasWon = false;
-                    unit2HasWon = true;
-                    army1Starts = true;
-                    army1.remove(unit1);
-                    System.out.println("unit2 has won");
-                }
+            Unit winner = fight(unit1,unit2,army1Starts);
+            if(winner.equals(unit1)){
+                army2.remove(unit2);
+                army1Starts = false;
+                unit1HasWon = true;
+                unit2HasWon = false;
+            }else{
+                army1.remove(unit1);
+                army1Starts = true;
+                unit1HasWon = false;
+                unit2HasWon = true;
             }
+
+
         }if(army1.hasUnits()){
-            System.out.println("Army1 has won");
             return army1;
         }else{
-            System.out.println("Army2 has won");
             return army2;
         }
     }
 
 
 
-    public boolean getArmy1Starts(){
+    public static boolean army1Starts(){
         int startingArmy = 1 + random.nextInt(2);
         boolean army1Starts;
         if(startingArmy == 1){
@@ -104,7 +69,7 @@ public class Battle {
         return army1Starts;
     }
 
-    public Unit getWinnerUnit(Unit unit1, Unit unit2){
+    public static Unit getWinnerUnit(Unit unit1, Unit unit2){
         if(unit2.getHealth()<1){
             return unit1;
         }else{
@@ -112,28 +77,58 @@ public class Battle {
         }
     }
 
+    public static Unit fight(Unit unit1, Unit unit2, boolean army1Starts){
+        if(army1Starts){
+            while (unit1.getHealth() > 0 && unit2.getHealth() > 0) {
+                unit1.attack(unit2);
+                if(unit2.getHealth() < 1){
+                    break;
+                }
+                unit2.attack(unit1);
+            }
+        }else{
+            while (unit1.getHealth() > 0 && unit2.getHealth() > 0) {
+                unit2.attack(unit1);
+                if(unit1.getHealth() < 1){
+                    break;
+                }
+                unit1.attack(unit2);
+            }
+        }
+        return getWinnerUnit(unit1,unit2);
+    }
+
     public static void main(String[] args){
-        var cavalry1 = new CavalryUnit("cavalry1", 100);
-        var cavalry2 = new CavalryUnit("cavalry2", 100);
-        var cavalry3 = new CavalryUnit("cavalry3", 100);
-        var cavalry4 = new CavalryUnit("cavalry4", 100);
-        var cavalry5 = new CavalryUnit("cavalry5", 100);
-        var army1 = new Army("Army1");
-        var army2 = new Army("Army2");
-        army1.add(cavalry1);
-        army1.add(cavalry2);
-        army1.add(cavalry3);
-        army1.add(cavalry4);
-        army1.add(cavalry5);
-        army2.add(cavalry1);
-        army2.add(cavalry2);
-        army2.add(cavalry3);
-        army2.add(cavalry4);
-        army2.add(cavalry5);
+        int army1Wins = 0;
+        int army2Wins = 0;
 
-        var battle = new Battle(army1,army2);
-        battle.simulate();
 
+        for(int i = 0; i < 100000; i++){
+            var cavalry1 = new CavalryUnit("cavalry1", 10);
+            var cavalry2 = new CavalryUnit("cavalry2", 10);
+            var cavalry3 = new CavalryUnit("cavalry3", 10);
+            var cavalry4 = new CavalryUnit("cavalry4", 10);
+            var cavalry5 = new CavalryUnit("cavalry5", 10);
+            var cavalry6 = new CavalryUnit("cavalry6", 10);
+            var army1 = new Army("Army1");
+            var army2 = new Army("Army2");
+
+            army1.add(cavalry1);
+            army1.add(cavalry2);
+            army1.add(cavalry3);
+            army2.add(cavalry4);
+            army2.add(cavalry5);
+            army2.add(cavalry6);
+            var battle = new Battle(army1,army2);
+            if(battle.simulate().getName().equalsIgnoreCase("army1")){
+                army1Wins++;
+            }else{
+                army2Wins++;
+            }
+        }
+
+        System.out.println(army1Wins);
+        System.out.println(army2Wins);
 
     }
 }

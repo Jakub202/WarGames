@@ -123,7 +123,25 @@ public class Army {
     }
 
 
-    // TODO: add equals, toString and Hashcode methods.
+    /**
+     * returns a status of the army
+     * @return String
+     */
+    public String toString(){
+        String output = "Name of army: " + this.getName() + "\n";
+        output += "Number of remaining units: " + this.getSizeOfArmy();
+        for(Unit unit : units){
+            output += "\n unit name: " + unit.getName() + "\n health: " + unit.getHealth();
+        }
+        return output;
+    }
+
+    public void clearArmy(){
+        this.getAllUnits().clear();
+    }
+
+
+    // TODO: add equals and Hashcode methods.
 
 
 }

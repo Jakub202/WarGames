@@ -1,84 +1,105 @@
 package Battle;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.w3c.dom.ranges.Range;
 import units.*;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArmyTest {
 
+    Army army1;
+    Army army2;
+    CavalryUnit cavalry;
+    InfantryUnit infantry;
+    RangedUnit ranged;
+
+    @BeforeEach
+    void init(){
+        army1 = new Army("army1");
+        army2 = new Army("army2");
+        ranged = new RangedUnit("ranged",100);
+        cavalry = new CavalryUnit("cavalry",100);
+        infantry = new InfantryUnit("infantry",100);
+    }
+
     @Test
     void addMethodTest(){
-        var army = new Army("army1");
-        var unit = new CavalryUnit("cavalry",100);
-        army.add(unit);
-        assertEquals(unit, army.getAllUnits().get(0));
+        army1.add(cavalry);
+        army1.add(infantry);
+        assertEquals(infantry,army1.getAllUnits().get(1));
     }
 
     @Test
     void addAllMethodTest(){
-        var army = new Army("army1");
-
-        var unit1 = new CavalryUnit("cavalry",100);
-        var unit2 = new RangedUnit("ranged",100);
-        var unit3 = new RangedUnit("ranged",100);
-        var unit4 = new CommanderUnit("commander",100);
-        var unit5 = new InfantryUnit("infantry",100);
-
         ArrayList<Unit> list = new ArrayList<>();
 
-        list.add(unit1);
-        list.add(unit2);
-        list.add(unit3);
-        list.add(unit4);
-        list.add(unit5);
+        list.add(cavalry);
+        list.add(cavalry);
+        list.add(cavalry);
+        list.add(infantry);
+        list.add(infantry);
 
-        army.addAll(list);
+        army1.addAll(list);
 
-        assertEquals(list, army.getAllUnits());
-
+        assertEquals(list, army1.getAllUnits());
     }
 
     @Test
     void removeMethodTest(){
-        var army = new Army("army1");
-        var unit = new CavalryUnit("cavalry",100);
-        var unit2 = new RangedUnit("ranged", 100);
 
-        army.add(unit);
-        army.add(unit);
-        army.add(unit2);
-        army.add(unit2);
-        army.remove(unit);
-
-
-        assertEquals(3, army.getSizeOfArmy());
+        army1.add(cavalry);
+        army1.add(cavalry);
+        army1.add(infantry);
+        army1.add(infantry);
+        System.out.println(army1);
+        army1.remove(cavalry);
+        System.out.println(army1);
+        assertEquals(3, army1.getSizeOfArmy());
     }
 
     @Test
     void addNumberOfUnitsTest(){
-        var army = new Army("army1");
-        var unit = new CavalryUnit("cavalry",100);
-        army.addNumberOfUnits(5,unit);
-        assertEquals(5,army.getSizeOfArmy());
+
+        army1.addNumberOfUnits(5,cavalry);
+        assertEquals(5,army1.getSizeOfArmy());
     }
 
-/*    @Test
-    void getRandomMethodTest(){
-        var army = new Army("army1");
-        var unit = new CavalryUnit("cavalry",100);
-        var unit2 = new CavalryUnit("cavalry2",100);
-        var unit3 = new CavalryUnit("cavalry3",100);
-        var unit4 = new CavalryUnit("cavalry4",100);
-        var unit5 = new CavalryUnit("cavalry5",100);
-        var unit6 = new CavalryUnit("cavalry6",100);
-        var unit7 = new CavalryUnit("cavalry7",100);
 
-        System.out.println(army.getRandom().getName());
-        assertNotEquals(1, army.getSizeOfArmy());
-    }*/
+
+    @Test
+    void getRandomMethodTest(){
+        army1.add(cavalry);
+        army1.add(infantry);
+        army1.add(ranged);
+        for(int i = 0; i < 10; i++){
+            System.out.println(army1.getRandom().getName());
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        army1.remove(cavalry);
+        for(int i = 0; i < 10; i++){
+            System.out.println(army1.getRandom().getName());
+        }
+    }
+
+    @Test
+    void armyUnitTest(){
+        army1.add(ranged);
+        army1.add(ranged);
+        army2.add(ranged);
+        cavalry.attack(army1.getAllUnits().get(0));
+        cavalry.attack(army1.getAllUnits().get(0));
+        cavalry.attack(army1.getAllUnits().get(0));
+        System.out.println(army1.getAllUnits().get(0).getHealth());
+        System.out.println(army1.getAllUnits().get(1).getHealth());
+        System.out.println(army2.getRandom().getHealth());
+
+    }
+
 
     // TODO: test of getRandom method
 
