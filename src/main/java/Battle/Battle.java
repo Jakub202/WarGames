@@ -98,34 +98,5 @@ public class Battle {
         return getWinnerUnit(unit1,unit2);
     }
 
-    public static void main(String[] args){
-        int army1Wins = 0;
-        int army2Wins = 0;
-
-
-        for(int i = 0; i < 100000; i++){
-            var cavalry1 = new CavalryUnit("cavalry1", 10);
-            var cavalry2 = new CavalryUnit("cavalry2", 10);
-            var cavalry3 = new CavalryUnit("cavalry3", 10);
-            var cavalry4 = new CavalryUnit("cavalry4", 10);
-            var cavalry5 = new CavalryUnit("cavalry5", 10);
-            var cavalry6 = new CavalryUnit("cavalry6", 10);
-            var army1 = new Army("Army1");
-            var army2 = new Army("Army2");
-
-            army1.addNumberOfUnits(10,cavalry1);
-            army2.addNumberOfUnits(10,cavalry1);
-
-            var battle = new Battle(army1,army2);
-            if(battle.simulate().getName().equalsIgnoreCase("army1")){
-                army1Wins++;
-            }else{
-                army2Wins++;
-            }
-        }
-
-        System.out.println(army1Wins);
-        System.out.println(army2Wins);
-
-    }
 }
+

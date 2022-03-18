@@ -1,6 +1,8 @@
-units\Unit.class
-units\RangedUnit.class
-units\InfantryUnit.class
 units\CavalryUnit.class
 Battle\Army.class
+Battle\Battle.class
 units\CommanderUnit.class
+units\Unit.class
+units\RangedUnit.class
+Battle\BattleClient.class
+units\InfantryUnit.class
