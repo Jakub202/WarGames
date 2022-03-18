@@ -28,7 +28,7 @@ public class Army {
      */
     public Army(String name) {
         this.name = name;
-        this.units = new ArrayList<Unit>();
+        this.units = new ArrayList<>();
     }
 
     /**
@@ -47,12 +47,17 @@ public class Army {
     }
 
     /**
-     * adds a unit to the army list
+     * adds a unit to the army list, if unit is recruited adds a copy
      *
      * @param unit
      */
     public void add(Unit unit) {
-        this.units.add(unit);
+        if(!unit.getRecruitment()){
+            this.units.add(unit);
+            unit.setRecruitedTrue();
+        }else{
+            this.units.add(unit.copyUnit());
+        }
     }
 
     /**
@@ -62,13 +67,13 @@ public class Army {
      */
     public void addAll(ArrayList<Unit> Units) {
         for (Unit unit : Units) {
-            this.units.add(unit);
+            this.add(unit);
         }
     }
 
-    public void addNumberOfUnits(int ammount, Unit unit){
-        for(int i = 0; i < ammount; i++){
-            this.units.add(unit);
+    public void addNumberOfUnits(int amount, Unit unit){
+        for(int i = 0; i < amount; i++){
+            this.add(unit);
         }
     }
 

@@ -44,4 +44,9 @@ public class InfantryUnit extends Unit {
     public int getResistBonus() {
         return 1;
     }
+
+    @Override
+    public Unit copyUnit(){
+        return new InfantryUnit(this.getName(),this.getHealth(),this.getAttack(),this.getArmor());
+    }
 }

@@ -49,4 +49,9 @@ public class RangedUnit extends Unit {
         }
         return bonus;
     }
+
+    @Override
+    public Unit copyUnit(){
+        return new RangedUnit(this.getName(),this.getHealth(),this.getAttack(),this.getArmor());
+    }
 }

@@ -27,9 +27,13 @@ class ArmyTest {
 
     @Test
     void addMethodTest(){
-        army1.add(cavalry);
         army1.add(infantry);
-        assertEquals(infantry,army1.getAllUnits().get(1));
+        army1.add(infantry);
+        army2.add(infantry);
+        army2.add(infantry);
+
+        assertNotEquals(army1.getAllUnits().get(1),army2.getAllUnits().get(1));
+        assertNotEquals(infantry,army1.getAllUnits().get(1));
     }
 
     @Test
@@ -62,9 +66,10 @@ class ArmyTest {
 
     @Test
     void addNumberOfUnitsTest(){
-
         army1.addNumberOfUnits(5,cavalry);
+        army2.addNumberOfUnits(5,cavalry);
         assertEquals(5,army1.getSizeOfArmy());
+        assertNotEquals(army1.getAllUnits().get(4),army2.getAllUnits().get(4));
     }
 
 
@@ -91,12 +96,10 @@ class ArmyTest {
         army1.add(ranged);
         army1.add(ranged);
         army2.add(ranged);
-        cavalry.attack(army1.getAllUnits().get(0));
-        cavalry.attack(army1.getAllUnits().get(0));
-        cavalry.attack(army1.getAllUnits().get(0));
-        System.out.println(army1.getAllUnits().get(0).getHealth());
-        System.out.println(army1.getAllUnits().get(1).getHealth());
-        System.out.println(army2.getRandom().getHealth());
+        System.out.println(army1);
+        cavalry.attack(ranged);
+        System.out.println(army1);
+
 
     }
 

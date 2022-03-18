@@ -113,12 +113,9 @@ public class Battle {
             var army1 = new Army("Army1");
             var army2 = new Army("Army2");
 
-            army1.add(cavalry1);
-            army1.add(cavalry2);
-            army1.add(cavalry3);
-            army2.add(cavalry4);
-            army2.add(cavalry5);
-            army2.add(cavalry6);
+            army1.addNumberOfUnits(10,cavalry1);
+            army2.addNumberOfUnits(10,cavalry1);
+
             var battle = new Battle(army1,army2);
             if(battle.simulate().getName().equalsIgnoreCase("army1")){
                 army1Wins++;

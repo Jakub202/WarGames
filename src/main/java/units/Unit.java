@@ -98,9 +98,20 @@ public abstract class Unit {
         this.health = health;
     }
 
+    public boolean getRecruitment(){
+        return recruited;
+    }
+
+    public void setRecruitedTrue(){
+        this.recruited = true;
+    }
+
     public abstract int getAttackBonus();
 
     public abstract int getResistBonus();
+
+    public abstract Unit copyUnit();
+
 
     /**
      * toString method
